@@ -1,8 +1,10 @@
 package com.technostorms.bank.service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.technostorms.bank.model.Account;
@@ -46,6 +48,22 @@ public class AccountService implements ICoreService {
 		  }
 		  oAccount.setBalance(balance);
 		  accountRepository.save(oAccount);
+	}
+
+
+	public Account search(String firstName,String accountId) {
+		List<Account> accounts = (List<Account>) accountRepository.findAll();
+		Account account = new Account();
+		if(accountId!=null) {
+			account=accounts.stream().map(a->a).filter(a->a.getAccountId().equals(accountId)).
+					findAny().orElseThrow(() -> new UsernameNotFoundException("No user found with username " + firstName));
+			}
+		if(firstName!=null) {
+		account=accounts.stream().map(a->a).filter(a->a.getUser().getFirstName().equals(firstName)).
+				findAny().orElseThrow(() -> new UsernameNotFoundException("No user found with username " + firstName));
+		}
+		
+		return account;
 	}
 }
 

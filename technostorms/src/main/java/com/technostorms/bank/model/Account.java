@@ -30,8 +30,8 @@ public class Account {
 	@NotBlank(message = "accountType is mandatory")
 	private String accountType;
 	
-	@Column(nullable=false,columnDefinition="BigDecimal(0.00) default '0.00'")
-	private BigDecimal balance=new BigDecimal(0.00);
+	@Column(nullable=false)
+	private BigDecimal balance = new BigDecimal(0.0);
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "uId")

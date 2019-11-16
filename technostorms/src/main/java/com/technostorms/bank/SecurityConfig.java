@@ -28,9 +28,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		 http
 		    .authorizeRequests()
-		    .antMatchers("/Bank/createAccount").permitAll()  //context path here
+		    .antMatchers("/Bank/createAccount").permitAll().antMatchers("/Bank/search").permitAll()  //context path here
 		    .anyRequest().authenticated().and().formLogin().
-		    defaultSuccessUrl("/Bank/credit").and().csrf().disable();
+		     defaultSuccessUrl("/Bank/credit").and().csrf().disable();
 		
 		
 		/*
