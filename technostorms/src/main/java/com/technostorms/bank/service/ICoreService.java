@@ -10,6 +10,8 @@ public interface ICoreService {
 
 	void credit(Account account, BigDecimal balance);
 
-	Account search(String firstName,String accountId);
+	Account search(String firstName,Long accountId);
+
+	Account findById(Long accountId);
 
 }

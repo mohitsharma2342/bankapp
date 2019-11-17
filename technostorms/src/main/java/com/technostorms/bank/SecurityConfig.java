@@ -26,11 +26,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
 	}
 	protected void configure(HttpSecurity http) throws Exception {
-		 http
-		    .authorizeRequests()
-		    .antMatchers("/Bank/createAccount").permitAll().antMatchers("/Bank/search").permitAll()  //context path here
-		    .anyRequest().authenticated().and().formLogin().
-		     defaultSuccessUrl("/Bank/credit").and().csrf().disable();
+		
+		  http .authorizeRequests()
+		  .antMatchers("/Bank/*").permitAll()
+		  .anyRequest().authenticated().and().formLogin().
+		  defaultSuccessUrl("/Bank/credit").and().csrf().disable();
+		 
 		
 		
 		/*
