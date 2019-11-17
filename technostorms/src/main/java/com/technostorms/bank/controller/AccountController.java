@@ -18,6 +18,10 @@ import com.technostorms.bank.service.ICoreService;
 import com.technostorms.bank.utill.CustomErrorType;
 import com.technostorms.bank.utill.IConstant;
 
+/**
+ * @author Mohit
+ *
+ */
 @RestController
 @RequestMapping("Bank")
 public class AccountController {
@@ -28,11 +32,24 @@ public class AccountController {
 	@Autowired
 	private ICoreService service;
 
+	
+	/**
+	 * This method used for creating Account
+	 * @param account
+	 * @return account object
+	 */
 	@PostMapping("createAccount")
 	public Account createAccount(@Valid @RequestBody Account account) {
 		return accountRepository.save(account);
 	}
 
+	
+	
+	/**
+	 * This Method is used depositing the money in User Account
+	 * @param account
+	 * @return
+	 */
 	@PostMapping("credit")
 	public ResponseEntity<CustomErrorType> creditAmt(@RequestBody Account account) {
 		if (service.findById(account.getAccountId()) != null) {
@@ -42,9 +59,13 @@ public class AccountController {
 			return new ResponseEntity<CustomErrorType>(new CustomErrorType(IConstant.USER_NOTFOUND+ account.getAccountId()),
 					HttpStatus.BAD_REQUEST);
 		}
-
 	}
 
+	/**
+	 * This Method is used for Withdrawing the money From account
+	 * @param account
+	 * @return
+	 */
 	@PostMapping("debit")
 	public ResponseEntity<CustomErrorType> withDraw(@RequestBody Account account) {
 		if (service.findById(account.getAccountId()) != null) {
@@ -56,6 +77,13 @@ public class AccountController {
 		}
 	}
 
+	
+	/**
+	 * This Method is Used for Transferring the money from one account to another person account
+	 * @param account
+	 * @param transferID
+	 * @return
+	 */
 	@PostMapping("Transfer")
 	public ResponseEntity<CustomErrorType> transferAmont(@RequestBody Account account,
 			@QueryParam("transferID") String transferID) {
@@ -63,6 +91,13 @@ public class AccountController {
 		return new ResponseEntity<CustomErrorType>(new CustomErrorType(IConstant.TRANSFERED_MESSAGE), HttpStatus.OK);
 	}
 
+	
+	/**
+	 * This method is used for searching on basis of account id or firstName
+	 * @param firstName
+	 * @param accountId
+	 * @return
+	 */
 	@GetMapping("/search")
 	public ResponseEntity<CustomErrorType> find(@QueryParam("firstName") String firstName,
 			@QueryParam("accountId") Long accountId) {
