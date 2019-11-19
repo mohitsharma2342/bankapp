@@ -4,12 +4,11 @@ public class CustomErrorType {
 	
 	private String message;
 	
-	public String getErrorMessage() {
+	public String getMessage() {
 		return message;
 	}
-
-	public CustomErrorType(String meessage){
-		this.message = meessage;
+	public CustomErrorType(String message){
+		this.message = message;
 	}
 
 }
