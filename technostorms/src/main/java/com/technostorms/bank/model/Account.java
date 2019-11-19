@@ -1,10 +1,12 @@
 package com.technostorms.bank.model;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -14,9 +16,11 @@ import javax.validation.constraints.NotBlank;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name="account")
+@EntityListeners(AuditingEntityListener.class)
 public class Account {
 
 	@Id
@@ -25,8 +29,8 @@ public class Account {
 	@NotBlank(message = "accountType is mandatory")
 	private String accountType;
 	
-	
-	private BigDecimal balance;
+	@Column(nullable=false,columnDefinition="BigDecimal(0.00) default '0.00'")
+	private BigDecimal balance=new BigDecimal(0.00);
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "uId")

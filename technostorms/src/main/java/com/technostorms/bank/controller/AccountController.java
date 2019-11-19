@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.technostorms.bank.model.Account;
 import com.technostorms.bank.repository.AccountRepository;
 import com.technostorms.bank.service.ICoreService;
+import com.technostorms.bank.utill.CustomErrorType;
 
 @RestController
 @RequestMapping("Bank")
@@ -32,22 +33,22 @@ public class AccountController {
 	}
 	
 	@PostMapping("credit")
-	public ResponseEntity<String>  creditAmt(@RequestBody Account account){
+	public ResponseEntity<CustomErrorType>  creditAmt(@RequestBody Account account){
 		service.credit(account,account.getBalance());
-		return new ResponseEntity<String>(new String("SccessFully credited"),HttpStatus.OK);
+		return new ResponseEntity<CustomErrorType>(new CustomErrorType("SccessFully credited"),HttpStatus.OK);
 	}
 	
 	@PostMapping("debit")
-	public ResponseEntity<String> withDraw(@RequestBody Account account){
+	public ResponseEntity<CustomErrorType> withDraw(@RequestBody Account account){
 		service.withDrawAmount(account,null);
-		return new ResponseEntity<String>(new String("SccessFully Debited"),HttpStatus.OK);
+		return new ResponseEntity<CustomErrorType>(new CustomErrorType("SccessFully Debited"),HttpStatus.OK);
 	}
 	
 	@PostMapping("Transfer")
-	public ResponseEntity<String> transferAmont(@RequestBody Account account,
+	public ResponseEntity<CustomErrorType> transferAmont(@RequestBody Account account,
 			@QueryParam("transferID") String transferID){
 		service.withDrawAmount(account,transferID);
-		return new ResponseEntity<String>(new String("SccessFully transfered"),HttpStatus.OK);
+		return new ResponseEntity<CustomErrorType>(new CustomErrorType("SccessFully transfered"),HttpStatus.OK);
 	}
 	
 }
